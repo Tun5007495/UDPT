@@ -101,6 +101,15 @@ function get_posts(){
 		$user_name = $row_user['user_name'];
 		$user_image = $row_user['user_image'];	
 		
+		$post="select * from posts where post_id='$post_id' ";
+		$run_post = mysqli_query($con, $post);
+		$row_post = mysqli_fetch_array($run_post);
+		$post_point=substr($row_post['PostPoint'],0,20);
+
+		$comment="select count(*) as CommentNumber from comments where post_id='$post_id' ";
+		$run_comment = mysqli_query($con, $comment);
+		$row_comment = mysqli_fetch_array($run_comment);
+		$post_comment_point=substr($row_comment['CommentNumber'],0,20);
 		//Displaying posts from database
 
 		if($content == "No" && strlen($upload_image)>= 1){
@@ -153,6 +162,7 @@ function get_posts(){
 						<div class='row'>
 							<div class='col-sm-12'>
 								<p>$content</p>
+								<p>$post_point &#128151, $post_comment_point &#9997</p>
 								<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
 							</div>
 						</div><br>
@@ -183,6 +193,7 @@ function get_posts(){
 						<div class='row'>
 							<div class='col-sm-12'>
 							<h3><p>$content</p></h3>
+							<p>$post_point &#128151, $post_comment_point &#9997</p>
 							</div>
 						</div><br>
 						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>	
@@ -209,11 +220,23 @@ function single_post(){
 
 		$row_posts = mysqli_fetch_array($run_posts);
 
+
 		$post_id = $row_posts['post_id'];
 		$user_id = $row_posts['user_id'];
 		$content = $row_posts['post_content'];
 		$upload_image = $row_posts['upload_image'];
 		$post_date = $row_posts['post_date'];
+
+
+		$post="select * from posts where post_id='$post_id' ";
+		$run_post = mysqli_query($con, $post);
+		$row_post = mysqli_fetch_array($run_post);
+		$post_point=substr($row_post['PostPoint'],0,20);
+
+		$comment="select count(*) as CommentNumber from comments where post_id='$post_id' ";
+		$run_comment = mysqli_query($con, $comment);
+		$row_comment = mysqli_fetch_array($run_comment);
+		$post_comment_point=substr($row_comment['CommentNumber'],0,20);
 
 		$user = "select * from users where user_id = '$user_id' AND posts='yes'";
 
@@ -303,6 +326,7 @@ function single_post(){
 							<div class='row'>
 								<div class='col-sm-12'>
 									<p>$content</p>
+									<p>$post_point &#128151, $post_comment_point &#9997</p>
 									<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
 								</div>
 							</div><br>	
@@ -332,6 +356,7 @@ function single_post(){
 							<div class='row'>
 								<div class='col-sm-12'>
 								<h3><p>$content</p></h3>
+								<p>$post_point &#128151, $post_comment_point &#9997</p>
 								</div>
 							</div><br>
 								
@@ -395,6 +420,16 @@ function user_posts(){
 		$content = $row_posts['post_content'];
 		$upload_image = $row_posts['upload_image'];
 		$post_date = $row_posts['post_date'];
+
+		$post="select * from posts where post_id='$post_id' ";
+		$run_post = mysqli_query($con, $post);
+		$row_post = mysqli_fetch_array($run_post);
+		$post_point=substr($row_post['PostPoint'],0,20);
+
+		$comment="select count(*) as CommentNumber from comments where post_id='$post_id' ";
+		$run_comment = mysqli_query($con, $comment);
+		$row_comment = mysqli_fetch_array($run_comment);
+		$post_comment_point=substr($row_comment['CommentNumber'],0,20);
 
 		$user = "select * from users where user_id = '$user_id' AND posts='yes'";
 
@@ -474,6 +509,7 @@ function user_posts(){
 							<div class='row'>
 								<div class='col-sm-12'>
 									<p>$content</p>
+									<p>$post_point &#128151, $post_comment_point &#9997</p>
 									<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
 								</div>
 							</div><br>	
@@ -503,6 +539,7 @@ function user_posts(){
 							<div class='row'>
 								<div class='col-sm-12'>
 								<h3><p>$content</p></h3>
+								<p>$post_point &#128151, $post_comment_point &#9997</p>
 								</div>
 							</div><br>
 								
