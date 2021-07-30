@@ -162,10 +162,13 @@ function get_posts(){
 						<div class='row'>
 							<div class='col-sm-12'>
 								<p>$content</p>
-								<p>$post_point &#128151, $post_comment_point &#9997</p>
+								
 								<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+								<p>$post_point &#128151, $post_comment_point &#9997</p>
 							</div>
 						</div><br>
+
+						<button class='btn btn-danger' style='background-color:red'> Report</button>
 						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>	
 					</div>
 					<div class='col-sm-3'>
@@ -196,6 +199,44 @@ function get_posts(){
 							<p>$post_point &#128151, $post_comment_point &#9997</p>
 							</div>
 						</div><br>
+						<!-- log in // cho nay
+						<div class='modal fade' id='dangnhap' tabindex='-1' role='dialog' aria-hidden='true'>
+
+							<div class='modal-dialog' role='document'>
+								<div class='modal-content>
+									<div class='modal-header'>
+										<h5 class='modal-title text-center'>Đăng nhập</h5>
+										<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+											<span aria-hidden='true'>&times;</span>
+										</button>
+									</div>
+									<div class='modal-body'> -->
+										<form action='# method='post'>
+											<div class='form-group'>
+												<label class='col-form-label'>Email</label>
+												<input type='text' class='form-control' placeholder= '' name='email_login' required=''>
+											</div>
+											<div class='form-group'>
+												<label class='col-form-label'>Mật khẩu</label>
+												<input type='password' class='form-control' placeholder=''  name='password_login' required=''>
+											</div>
+											<div class='right-w3l'>
+												<input type='submit' class='form-control' name='dangnhap_home' value='Đăng nhập'>
+											</div>
+											
+											<p class='text-center dont-do mt-3'>Chưa có tài khoản?
+												<a href='#' data-toggle='modal' data-target='#dangky'>
+													Đăng ký</a>
+											</p>
+										</form>
+										<!--
+									</div>
+								</div>
+							</div>
+						</div>
+-->
+	<!-- register -->						
+						<button class='btn btn-danger' style='background-color:red'> Report</button>
 						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>	
 					</div>
 					<div class='col-sm-3'>
@@ -326,8 +367,9 @@ function single_post(){
 							<div class='row'>
 								<div class='col-sm-12'>
 									<p>$content</p>
-									<p>$post_point &#128151, $post_comment_point &#9997</p>
+									
 									<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+									<p>$post_point &#128151, $post_comment_point &#9997</p>
 								</div>
 							</div><br>	
 						</div>
