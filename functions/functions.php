@@ -161,14 +161,14 @@ function get_posts(){
 						</div>
 						<div class='row'>
 							<div class='col-sm-12'>
-								<p>$content</p>
+								<h3> <p>$content</p> </h3>
 								
 								<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
-								<p>$post_point &#128151, $post_comment_point &#9997</p>
+								<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
 							</div>
 						</div><br>
-
-						<button class='btn btn-danger' style='background-color:red'> Report</button>
+<!--
+						<button class='btn btn-danger' style='background-color:red'> Report</button> -->
 						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>	
 					</div>
 					<div class='col-sm-3'>
@@ -196,9 +196,10 @@ function get_posts(){
 						<div class='row'>
 							<div class='col-sm-12'>
 							<h3><p>$content</p></h3>
-							<p>$post_point &#128151, $post_comment_point &#9997</p>
+							<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
 							</div>
 						</div><br>
+
 						<!-- log in // cho nay
 						<div class='modal fade' id='dangnhap' tabindex='-1' role='dialog' aria-hidden='true'>
 
@@ -210,7 +211,7 @@ function get_posts(){
 											<span aria-hidden='true'>&times;</span>
 										</button>
 									</div>
-									<div class='modal-body'> -->
+									<div class='modal-body'> 
 										<form action='# method='post'>
 											<div class='form-group'>
 												<label class='col-form-label'>Email</label>
@@ -229,14 +230,14 @@ function get_posts(){
 													Đăng ký</a>
 											</p>
 										</form>
-										<!--
+										<
 									</div>
 								</div>
 							</div>
 						</div>
--->
+						-->
 	<!-- register -->						
-						<button class='btn btn-danger' style='background-color:red'> Report</button>
+						
 						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>	
 					</div>
 					<div class='col-sm-3'>
@@ -254,7 +255,7 @@ function single_post(){
 		global $con;
 
 		$get_id = $_GET['post_id'];
-
+		// Lay bai viet co ma post_id
 		$get_posts = "select * from posts where post_id = '$get_id'";
 
 		$run_posts = mysqli_query($con, $get_posts);
@@ -268,16 +269,24 @@ function single_post(){
 		$upload_image = $row_posts['upload_image'];
 		$post_date = $row_posts['post_date'];
 
+		//
 
-		$post="select * from posts where post_id='$post_id' ";
-		$run_post = mysqli_query($con, $post);
-		$row_post = mysqli_fetch_array($run_post);
-		$post_point=substr($row_post['PostPoint'],0,20);
+		//$post="select * from posts where post_id='$post_id' ";
+		//$run_post = mysqli_query($con, $post);
+		//$row_post = mysqli_fetch_array($run_post);
+		$post_point=substr($row_posts['PostPoint'],0,20);
 
+		//Lay so luong comment trong bai post
 		$comment="select count(*) as CommentNumber from comments where post_id='$post_id' ";
 		$run_comment = mysqli_query($con, $comment);
 		$row_comment = mysqli_fetch_array($run_comment);
 		$post_comment_point=substr($row_comment['CommentNumber'],0,20);
+
+		/*
+		$report="select * from report where post_id='$post_id'";
+		$run_report=mysqli_query($con, $report);
+		$row_report=mysqli_fetch_array($run_report);
+		*/
 
 		$user = "select * from users where user_id = '$user_id' AND posts='yes'";
 
@@ -296,6 +305,7 @@ function single_post(){
 
 		$user_com_id = $row_com['user_id'];
 		$user_com_name = $row_com['user_name'];
+		$user_com_email=$row_com['user_email'];
 
 		if(isset($_GET['post_id'])){
 			$post_id = $_GET['post_id'];
@@ -366,10 +376,11 @@ function single_post(){
 							</div>
 							<div class='row'>
 								<div class='col-sm-12'>
-									<p>$content</p>
+									<h3><p>$content</p></h3>
 									
 									<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
-									<p>$post_point &#128151, $post_comment_point &#9997</p>
+									<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
+									<button class='btn btn-danger' style='background-color:red'> Report</button>
 								</div>
 							</div><br>	
 						</div>
@@ -398,7 +409,54 @@ function single_post(){
 							<div class='row'>
 								<div class='col-sm-12'>
 								<h3><p>$content</p></h3>
-								<p>$post_point &#128151, $post_comment_point &#9997</p>
+								<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
+								<!-- <button class='btn btn-danger' style='background-color:red name='report'> Report</button> -->
+								<!-- top-header -->
+									<div class='agile-main-top'>
+										<div class='container-fluid'>
+											<div class='row main-top-w3l py-2'>
+												<div class='col-lg-4 header-most-top'>
+													
+												</div>
+												<div class='col-lg-8 header-right mt-lg-0 mt-2'>
+													<!-- header lists -->
+															<a href='#' data-toggle='modal' data-target='#report' class='btn btn-danger'>
+																 Report </a>
+													<!-- //header lists -->
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- modals -->
+									<!-- log in -->
+									<div class='modal fade' id='report' tabindex='-1' role='dialog aria-hidden='true'  >
+										<div class='modal-dialog' role='document' style='background: tomato' >
+											<div class=modal-content'  >
+												<div class='modal-header'>
+													<h5 class='modal-title text-center'>Report Post</h5>
+													<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+														<span aria-hidden='true'>&times;</span>
+													</button>
+												</div>
+												<div class=modal-body>
+													<form action='#' method='post'>
+														<div class='form-group'>
+															<label class='col-form-label'>Email</label>
+															<input type='text' class='form-control' placeholder='' name='email_report' required='' value='$user_com_email'>
+														</div>
+														<div class='form-group'>
+															<label class='col-form-label'>Content Report</label>
+															<input type='text' class='form-control' placeholder='' name='content_report' required=''>
+														</div>
+														<div class='right-w3l' >
+															<input type='submit' class='form-control' name='send_admin' value='Send report' style='background: Turquoise; color:black;border:solid;margin:auto; box-sizing:content-box; width: 100px; height: 20px;padding: 10px;'>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+
 								</div>
 							</div><br>
 								
@@ -407,6 +465,45 @@ function single_post(){
 						</div>
 					</div><br><br>
 				";
+				if(isset($_POST['send_admin'])){
+				$report = htmlentities($_POST['content_report']);
+
+				if($report == ""){
+					echo "<script>alert('Please enter your report!')</script>";
+					//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+				}else
+				{
+					/*
+					include("php.ini");
+					$mail = new PHPMailer();
+					// Settings
+					$mail->IsSMTP();
+					$mail->CharSet = 'UTF-8';
+
+					$mail->Host       = "tun5007495@gmail.com";    // SMTP server example
+					$mail->SMTPDebug  = 0;                     // enables SMTP debug information (for testing)
+					$mail->SMTPAuth   = true;                  // enable SMTP authentication
+					$mail->Port       = 25;                    // set the SMTP port for the GMAIL server
+					$mail->Username   = "username";            // SMTP account username example
+					$mail->Password   = "password";            // SMTP account password example
+
+					// Content
+					$mail->isHTML(true);                       // Set email format to HTML
+					$mail->Subject = 'Report $username';
+					$mail->Body    = '$content';
+					//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+					$mail->send();
+					*/
+					$insert= "insert into report(post_id, user_report, username_report, email_report, content, date) values('$post_id', '$user_com_id','$user_com_name','$user_com_email','$report',NOW())";
+					$run=mysqli_query($con, $insert);
+					if($run)
+					{
+					echo "<script>alert('Your report is processing!')</script>";
+					}
+
+					//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+				}
+			}
 			} //else condition ending
 
 			include("comments.php");
@@ -431,7 +528,7 @@ function single_post(){
 
 				if($comment == ""){
 					echo "<script>alert('Please enter your comment!')</script>";
-					echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+					//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
 				}else{
 					$insert = "insert into comments (post_id, user_id, comment, comment_author,date) values ('$post_id','$user_id','$comment','$user_com_name',NOW())";
 
