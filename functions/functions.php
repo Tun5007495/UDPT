@@ -380,7 +380,52 @@ function single_post(){
 									
 									<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
 									<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
-									<button class='btn btn-danger' style='background-color:red'> Report</button>
+									<!-- <button class='btn btn-danger' style='background-color:red name='report'> Report</button> -->
+								<!-- top-header -->
+									<div class='agile-main-top'>
+										<div class='container-fluid'>
+											<div class='row main-top-w3l py-2'>
+												<div class='col-lg-4 header-most-top'>
+													
+												</div>
+												<div class='col-lg-8 header-right mt-lg-0 mt-2'>
+													<!-- header lists -->
+															<a href='#' data-toggle='modal' data-target='#report' class='btn btn-danger'>
+																 Report </a>
+													<!-- //header lists -->
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- modals -->
+									<!-- report -->
+									<div class='modal fade' id='report' tabindex='-1' role='dialog aria-hidden='true'  >
+										<div class='modal-dialog' role='document' style='background: tomato' >
+											<div class=modal-content'  >
+												<div class='modal-header'>
+													<h5 class='modal-title text-center'>Report Post</h5>
+													<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+														<span aria-hidden='true'>&times;</span>
+													</button>
+												</div>
+												<div class=modal-body>
+													<form action='#' method='post'>
+														<div class='form-group'>
+															<label class='col-form-label'>Email</label>
+															<input type='text' class='form-control' placeholder='' name='email_report' required='' value='$user_com_email'>
+														</div>
+														<div class='form-group'>
+															<label class='col-form-label'>Content Report</label>
+															<input type='text' class='form-control' placeholder='' name='content_report' required=''>
+														</div>
+														<div class='right-w3l' >
+															<input type='submit' class='form-control' name='send_admin' value='Send report' style='background: Turquoise; color:black;border:solid;margin:auto; box-sizing:content-box; width: 100px; height: 20px;padding: 10px;'>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div><br>	
 						</div>
@@ -410,17 +455,86 @@ function single_post(){
 								<div class='col-sm-12'>
 								<h3><p>$content</p></h3>
 								<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
-								<!-- <button class='btn btn-danger' style='background-color:red name='report'> Report</button> -->
+								
+
 								<!-- top-header -->
 									<div class='agile-main-top'>
 										<div class='container-fluid'>
 											<div class='row main-top-w3l py-2'>
 												<div class='col-lg-4 header-most-top'>
-													
+													<!-- <button class='btn btn-danger' name='like'> 👍</button> -->";
+/*
+													$qr="select * from vote where post_id='$post_id' and user_vote='$user_com_id' ";
+											        $run_qr=mysqli_query($con, $qr);
+											        $row_qr=mysqli_fetch_array($run_qr);
+											        $status_vote=0;
+											        //$run=false;
+											        if($run_qr)
+											        {
+											        	$status_vote=$row_qr['statusvote'];
+											        	if($status_vote==1)
+											        	{
+											        		echo "<script> document.getElementById('spoiler').style.display='none';</script>";
+											        	}
+											        	else
+											        	{
+
+											        		echo "<script> document.getElementById('spoiler').style.display='block';</script>";
+											        	}
+
+											        }
+													echo " 
+*/
+													echo"
+													<button class='btn btn-success' title='Click to like/unlike post' type='button' onclick='func()' id='but'>👍</button>
+													<div id='spoiler' style='display:none'>You Liked</div>
+													<script>
+													function func(){
+
+											           if(document.getElementById('spoiler') .style.display=='none'){
+											           document.getElementById('spoiler').style.display='block';
+											           document.getElementById('but').innerHTML='👎';
+											           }
+											           else{
+											           document.getElementById('spoiler').style.display='none';
+											           document.getElementById('but').innerHTML='👍';
+											           }
+											           }
+											       </script>";
+/*
+											       //Xu li khi co ng like post
+
+											       $vote_id=$row_qr['vote_id'];
+
+											       if($run_qr&& $status_vote==1)
+											       {
+											       		$update="update table vote set statusvote=0 where vote_id='$vote_id'  ";
+											       		$run=mysqli_query($con, $update);
+											       }
+											       elseif ($row_qr&& $row_qr['statusvote']==0)
+											       {
+											       		$update="update table vote set statusvote=1 where vote_id='$vote_id'  ";
+											       		$run=mysqli_query($con, $update);
+											       }
+											       else
+											       {
+											       		$insert="insert into vote(post_id, user_vote, date) values('$post_id','$user_com_id',NOW()) ";
+											       		$run=mysqli_query($con, $insert);
+											       }
+
+											       if($run)
+											       {
+											       	echo "success";
+											       }
+*/
+											       echo "
+
 												</div>
 												<div class='col-lg-8 header-right mt-lg-0 mt-2'>
 													<!-- header lists -->
-															<a href='#' data-toggle='modal' data-target='#report' class='btn btn-danger'>
+
+
+													<a href='#' data-toggle='modal' data-target='#report' class='btn btn-danger' >
 																 Report </a>
 													<!-- //header lists -->
 												</div>
@@ -428,7 +542,7 @@ function single_post(){
 										</div>
 									</div>
 									<!-- modals -->
-									<!-- log in -->
+									<!-- report -->
 									<div class='modal fade' id='report' tabindex='-1' role='dialog aria-hidden='true'  >
 										<div class='modal-dialog' role='document' style='background: tomato' >
 											<div class=modal-content'  >
@@ -529,14 +643,24 @@ function single_post(){
 				if($comment == ""){
 					echo "<script>alert('Please enter your comment!')</script>";
 					//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
-				}else{
+				}
+				else
+				{
 					$insert = "insert into comments (post_id, user_id, comment, comment_author,date) values ('$post_id','$user_id','$comment','$user_com_name',NOW())";
 
 					$run = mysqli_query($con, $insert);
+					if($run)
+					{
+						
+						//echo "<script>
+						echo "<script>alert('Your comment added!')</script>";
+						//echo "<script>window.open('single.php?post_id='.'$post_id')</script> ";
+					}
+						//echo "<script>window.location('single.php?post_id='.'$post_id')</script>";
+						
+					}
+				
 
-					echo "<script>alert('Your comment added!')</script>";
-					echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
-				}
 			}
 		}
 	}
