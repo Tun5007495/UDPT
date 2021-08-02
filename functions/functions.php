@@ -110,6 +110,22 @@ function get_posts(){
 		$run_comment = mysqli_query($con, $comment);
 		$row_comment = mysqli_fetch_array($run_comment);
 		$post_comment_point=substr($row_comment['CommentNumber'],0,20);
+
+
+		$user_com = $_SESSION['user_email'];
+		$get_com = "select * from users where user_email='$user_com'";
+		$run_com = mysqli_query($con, $get_com);
+		$row_com = mysqli_fetch_array($run_com);
+
+		$user_com_id = $row_com['user_id'];
+		$user_com_name = $row_com['user_name'];
+		$user_com_email=$row_com['user_email'];
+
+		$qr="select * from vote where post_id='$post_id' and user_vote='$user_com_id'";
+		$run_vote=mysqli_query($con, $qr);
+		$num_of_vote=mysqli_num_rows($run_vote);
+		$row_vote=mysqli_fetch_array($run_vote);
+
 		//Displaying posts from database
 
 		if($content == "No" && strlen($upload_image)>= 1){
@@ -164,12 +180,50 @@ function get_posts(){
 								<h3> <p>$content</p> </h3>
 								
 								<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
-								<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
-							</div>
+								<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+								<!-- top-header -->
+									<div class='agile-main-top'>
+										<div class='container-fluid'>
+											<div class='row main-top-w3l py-2'>
+												<div class='col-lg-4 header-most-top'>
+													";
+
+													$temp=0;
+											        if($num_of_vote==1)
+											        {										
+											        	$temp=1;
+											        }
+
+											       	echo "
+
+											       	<form method='post'>
+											       	<input type='submit' name='vote' id='vote' value=";
+											       	if($temp==1)
+											       	{
+											       		echo "👍";
+											       	}
+											       	else
+											       	{
+											       		echo "👎";
+											       	}
+											       	echo"
+											       	 class='btn btn-success'  />
+											       	 <a href='single.php?post_id=$post_id' style='float:right;' ><button class='btn btn-info' >Comment</button></a><br>	
+											       	</form>";
+
+											       	if($temp==1)
+											       		echo"You liked this post";
+											       	else
+											       		echo"Like this post?";
+											       	echo"	
+											      </div>
+											</div>
+										</div>
+									</div>
+								</div>		      
+							
 						</div><br>
-<!--
-						<button class='btn btn-danger' style='background-color:red'> Report</button> -->
-						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>	
+						
 					</div>
 					<div class='col-sm-3'>
 					</div>
@@ -196,51 +250,57 @@ function get_posts(){
 						<div class='row'>
 							<div class='col-sm-12'>
 							<h3><p>$content</p></h3>
-							<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
+							<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+							<!-- top-header -->
+									<div class='agile-main-top'>
+										<div class='container-fluid'>
+											<div class='row main-top-w3l py-2'>
+												<div class='col-lg-4 header-most-top'>
+												";
+													$temp=0;
+											        if($num_of_vote==1)
+											        {										        	
+											        	$temp=1;
+											        }
+
+											       	echo "
+											       	<form method='post'>
+											       	<input type='submit' name='vote' id='vote' value=";
+											       	if($temp==1)
+											       	{
+											       		echo "👍";
+											       		//echo"You liked this post";
+
+											       	}
+											       	else
+											       	{
+											       		echo "👎";
+											       		//echo "You unvote";
+											       		//echo"Like this post?";
+
+											       	}
+											       	echo"
+											       	 class='btn btn-success'  />
+											       	 <a href='single.php?post_id=$post_id' style='float:right;' ><button class='btn btn-info' >Comment</button></a><br>	
+											       	</form>";
+
+											       	if($temp==1)
+											       		echo"You liked this post";
+											       	else
+											       		echo"Like this post?";
+											       	echo"
+											    </div>
+											</div>
+										</div>
+									</div>
+
 							</div>
 						</div><br>
 
-						<!-- log in // cho nay
-						<div class='modal fade' id='dangnhap' tabindex='-1' role='dialog' aria-hidden='true'>
-
-							<div class='modal-dialog' role='document'>
-								<div class='modal-content>
-									<div class='modal-header'>
-										<h5 class='modal-title text-center'>Đăng nhập</h5>
-										<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-											<span aria-hidden='true'>&times;</span>
-										</button>
-									</div>
-									<div class='modal-body'> 
-										<form action='# method='post'>
-											<div class='form-group'>
-												<label class='col-form-label'>Email</label>
-												<input type='text' class='form-control' placeholder= '' name='email_login' required=''>
-											</div>
-											<div class='form-group'>
-												<label class='col-form-label'>Mật khẩu</label>
-												<input type='password' class='form-control' placeholder=''  name='password_login' required=''>
-											</div>
-											<div class='right-w3l'>
-												<input type='submit' class='form-control' name='dangnhap_home' value='Đăng nhập'>
-											</div>
-											
-											<p class='text-center dont-do mt-3'>Chưa có tài khoản?
-												<a href='#' data-toggle='modal' data-target='#dangky'>
-													Đăng ký</a>
-											</p>
-										</form>
-										<
-									</div>
-								</div>
-							</div>
-						</div>
-						-->
-	<!-- register -->						
-						
-						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>	
+							
 					</div>
 					<div class='col-sm-3'>
+
 					</div>
 				</div><br><br>
 			";
@@ -250,8 +310,10 @@ function get_posts(){
 	include("pagination.php");
 }
 
-function single_post(){
-	if(isset($_GET['post_id'])){
+function single_post()
+{
+	if(isset($_GET['post_id']))
+	{
 		global $con;
 
 		$get_id = $_GET['post_id'];
@@ -282,12 +344,14 @@ function single_post(){
 		$row_comment = mysqli_fetch_array($run_comment);
 		$post_comment_point=substr($row_comment['CommentNumber'],0,20);
 
+
+
 		/*
 		$report="select * from report where post_id='$post_id'";
 		$run_report=mysqli_query($con, $report);
 		$row_report=mysqli_fetch_array($run_report);
 		*/
-
+		//user cua bai post
 		$user = "select * from users where user_id = '$user_id' AND posts='yes'";
 
 		$run_user = mysqli_query($con, $user);
@@ -295,17 +359,24 @@ function single_post(){
 		$user_name = $row_user['user_name'];
 		$user_image = $row_user['user_image'];
 
+
+		//user dang nhap trong comment
 		$user_com = $_SESSION['user_email'];
-
 		$get_com = "select * from users where user_email='$user_com'";
-
 		$run_com = mysqli_query($con, $get_com);
-
 		$row_com = mysqli_fetch_array($run_com);
 
 		$user_com_id = $row_com['user_id'];
 		$user_com_name = $row_com['user_name'];
 		$user_com_email=$row_com['user_email'];
+
+
+		//vote:
+		$qr="select * from vote where post_id='$post_id' and user_vote='$user_com_id'";
+		$run_vote=mysqli_query($con, $qr);
+		$num_of_vote=mysqli_num_rows($run_vote);
+		$row_vote=mysqli_fetch_array($run_vote);
+
 
 		if(isset($_GET['post_id'])){
 			$post_id = $_GET['post_id'];
@@ -323,12 +394,16 @@ function single_post(){
 		
 		$p_id = $row['post_id'];
 
-		if($p_id != $post_id){
+		if($p_id != $post_id)
+		{
 			echo "<script>alert('ERROR')</script>";
 			echo "<script>window.open('home.php' , '_self')</script>";
 
-		}else{
-			if($content == "No" && strlen($upload_image)>= 1){
+		}
+		else
+		{
+			if($content == "No" && strlen($upload_image)>= 1)
+			{
 				echo"
 					<div class='row'>
 						<div class='col-sm-3'>
@@ -356,8 +431,8 @@ function single_post(){
 					</div><br><br>
 				";
 			}
-	
-			else if(strlen($content) >= 1 && strlen($upload_image) >=1){
+			else if(strlen($content) >= 1 && strlen($upload_image) >=1)
+			{
 				echo"
 					<div class='row'>
 						<div class='col-sm-3'>
@@ -379,7 +454,60 @@ function single_post(){
 									<h3><p>$content</p></h3>
 									
 									<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
-									<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
+									<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+								<!-- top-header -->
+									<div class='agile-main-top'>
+										<div class='container-fluid'>
+											<div class='row main-top-w3l py-2'>
+												<div class='col-lg-4 header-most-top'>
+													<!-- <button class='btn btn-danger' name='like'> 👍</button> -->";
+
+													$temp=0;
+											        if($num_of_vote==1)
+											        {										        										        										
+											        	$temp=1;
+											        }
+
+											       	echo "
+											       	<form method='post'>
+											       	<input type='submit' name='vote' id='vote' value=";
+											       	if($temp==1)
+											       	{
+											       		echo "👍";
+											       		//echo"You liked this post";
+
+											       	}
+											       	else
+											       	{
+											       		echo "👎";
+											       		//echo "You unvote";
+											       		//echo"Like this post?";
+
+											       	}
+											       	echo"
+											       	 class='btn btn-success'  />
+											       	</form>";
+
+											       	if($temp==1)
+											       		echo"You liked this post";
+											       	else
+											       		echo"Like this post?";
+											       echo "
+
+												</div>
+												<div class='col-lg-8 header-right mt-lg-0 mt-2'>
+													<!-- header lists -->
+
+
+													<a href='#' data-toggle='modal' data-target='#report' class='btn btn-danger' >
+																 Report </a>
+													<!-- //header lists -->
+												</div>
+											</div>
+										</div>
+									</div>
+
+
 									<!-- <button class='btn btn-danger' style='background-color:red name='report'> Report</button> -->
 								<!-- top-header -->
 									<div class='agile-main-top'>
@@ -390,8 +518,7 @@ function single_post(){
 												</div>
 												<div class='col-lg-8 header-right mt-lg-0 mt-2'>
 													<!-- header lists -->
-															<a href='#' data-toggle='modal' data-target='#report' class='btn btn-danger'>
-																 Report </a>
+
 													<!-- //header lists -->
 												</div>
 											</div>
@@ -434,7 +561,8 @@ function single_post(){
 					</div><br><br>
 				";
 			}
-			else{
+			else
+			{
 				echo"
 					<div class='row'>
 						<div class='col-sm-3'>
@@ -454,7 +582,7 @@ function single_post(){
 							<div class='row'>
 								<div class='col-sm-12'>
 								<h3><p>$content</p></h3>
-								<h2><p>$post_point &#128151, $post_comment_point &#9997</p></h2>
+								<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
 								
 
 								<!-- top-header -->
@@ -463,70 +591,37 @@ function single_post(){
 											<div class='row main-top-w3l py-2'>
 												<div class='col-lg-4 header-most-top'>
 													<!-- <button class='btn btn-danger' name='like'> 👍</button> -->";
-/*
-													$qr="select * from vote where post_id='$post_id' and user_vote='$user_com_id' ";
-											        $run_qr=mysqli_query($con, $qr);
-											        $row_qr=mysqli_fetch_array($run_qr);
-											        $status_vote=0;
-											        //$run=false;
-											        if($run_qr)
-											        {
-											        	$status_vote=$row_qr['statusvote'];
-											        	if($status_vote==1)
-											        	{
-											        		echo "<script> document.getElementById('spoiler').style.display='none';</script>";
-											        	}
-											        	else
-											        	{
 
-											        		echo "<script> document.getElementById('spoiler').style.display='block';</script>";
-											        	}
-
+													$temp=0;
+											        if($num_of_vote==1)
+											        {										        										        										
+											        	$temp=1;
 											        }
-													echo " 
-*/
-													echo"
-													<button class='btn btn-success' title='Click to like/unlike post' type='button' onclick='func()' id='but'>👍</button>
-													<div id='spoiler' style='display:none'>You Liked</div>
-													<script>
-													function func(){
 
-											           if(document.getElementById('spoiler') .style.display=='none'){
-											           document.getElementById('spoiler').style.display='block';
-											           document.getElementById('but').innerHTML='👎';
-											           }
-											           else{
-											           document.getElementById('spoiler').style.display='none';
-											           document.getElementById('but').innerHTML='👍';
-											           }
-											           }
-											       </script>";
-/*
-											       //Xu li khi co ng like post
+											       	echo "
+											       	<form method='post'>
+											       	<input type='submit' name='vote' id='vote' value=";
+											       	if($temp==1)
+											       	{
+											       		echo "👍";
+											       		//echo"You liked this post";
 
-											       $vote_id=$row_qr['vote_id'];
+											       	}
+											       	else
+											       	{
+											       		echo "👎";
+											       		//echo "You unvote";
+											       		//echo"Like this post?";
 
-											       if($run_qr&& $status_vote==1)
-											       {
-											       		$update="update table vote set statusvote=0 where vote_id='$vote_id'  ";
-											       		$run=mysqli_query($con, $update);
-											       }
-											       elseif ($row_qr&& $row_qr['statusvote']==0)
-											       {
-											       		$update="update table vote set statusvote=1 where vote_id='$vote_id'  ";
-											       		$run=mysqli_query($con, $update);
-											       }
-											       else
-											       {
-											       		$insert="insert into vote(post_id, user_vote, date) values('$post_id','$user_com_id',NOW()) ";
-											       		$run=mysqli_query($con, $insert);
-											       }
+											       	}
+											       	echo"
+											       	 class='btn btn-success'  />
+											       	</form>";
 
-											       if($run)
-											       {
-											       	echo "success";
-											       }
-*/
+											       	if($temp==1)
+											       		echo"You liked this post";
+											       	else
+											       		echo"Like this post?";
 											       echo "
 
 												</div>
@@ -577,48 +672,30 @@ function single_post(){
 						</div>
 						<div class='col-sm-3'>
 						</div>
-					</div><br><br>
-				";
-				if(isset($_POST['send_admin'])){
-				$report = htmlentities($_POST['content_report']);
-
-				if($report == ""){
-					echo "<script>alert('Please enter your report!')</script>";
-					//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
-				}else
-				{
-					/*
-					include("php.ini");
-					$mail = new PHPMailer();
-					// Settings
-					$mail->IsSMTP();
-					$mail->CharSet = 'UTF-8';
-
-					$mail->Host       = "tun5007495@gmail.com";    // SMTP server example
-					$mail->SMTPDebug  = 0;                     // enables SMTP debug information (for testing)
-					$mail->SMTPAuth   = true;                  // enable SMTP authentication
-					$mail->Port       = 25;                    // set the SMTP port for the GMAIL server
-					$mail->Username   = "username";            // SMTP account username example
-					$mail->Password   = "password";            // SMTP account password example
-
-					// Content
-					$mail->isHTML(true);                       // Set email format to HTML
-					$mail->Subject = 'Report $username';
-					$mail->Body    = '$content';
-					//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-					$mail->send();
-					*/
-					$insert= "insert into report(post_id, user_report, username_report, email_report, content, date) values('$post_id', '$user_com_id','$user_com_name','$user_com_email','$report',NOW())";
-					$run=mysqli_query($con, $insert);
-					if($run)
-					{
-					echo "<script>alert('Your report is processing!')</script>";
-					}
-
-					//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+					</div><br><br>";
 				}
-			}
-			} //else condition ending
+				if(isset($_POST['send_admin']))
+				{
+					$report = htmlentities($_POST['content_report']);
+
+					if($report == ""){
+						echo "<script>alert('Please enter your report!')</script>";
+						//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+					}
+					else
+					{
+						$insert= "insert into report(post_id, user_report, username_report, email_report, content, date) values('$post_id', '$user_com_id','$user_com_name','$user_com_email','$report',NOW())";
+						$run=mysqli_query($con, $insert);
+						if($run)
+						{
+						echo "<script>alert('Your report is processing!')</script>";
+						}
+
+						//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+					}
+				}
+		}
+			 //else condition ending
 
 			include("comments.php");
 
@@ -637,10 +714,12 @@ function single_post(){
 			</div>
 			";
 
-			if(isset($_POST['reply'])){
+			if(isset($_POST['reply']))
+			{
 				$comment = htmlentities($_POST['comment']);
 
-				if($comment == ""){
+				if($comment == "")
+				{
 					echo "<script>alert('Please enter your comment!')</script>";
 					//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
 				}
@@ -658,12 +737,67 @@ function single_post(){
 					}
 						//echo "<script>window.location('single.php?post_id='.'$post_id')</script>";
 						
-					}
-				
-
+				}
 			}
+			if(isset($_POST['vote']))
+			{
+				$result=false;
+				if($num_of_vote==1)
+				{
+					$delete_qr="delete from vote where post_id='$post_id' and user_vote='$user_com_id'";
+					$run= mysqli_query($con, $delete_qr);
+					$update_qr="update posts set PostPoint=PostPoint-1 where post_id='$post_id' ";
+					$run=mysqli_query($con, $update_qr);
+					$result=mysqli_affected_rows($con);
+				}
+				else
+				{
+					$insert_qr="insert into vote(post_id, user_vote, date) values('$post_id','$user_com_id',NOW())";
+					$run=mysqli_query($con, $insert_qr);
+					$update_qr="update posts set PostPoint=PostPoint+1 where post_id='$post_id' ";
+					$run=mysqli_query($con, $update_qr);
+					$result=mysqli_affected_rows($con);
+
+				}
+
+				/*if($temp==1)
+				{
+					$update="update table vote set statusvote='0' where user_vote='$user_com_id' and post_id='$post_id'  ";
+														    //$con->query($update);
+					$run=mysqli_query($con, $update);
+					if($run)
+					{
+						echo "<script>alert('Your report is processing!')</script>";
+					}
+					echo"You unvote, you can like!";
+				}
+				elseif($temp==0)
+				{
+					$update="update table vote set statusvote='1' where user_vote='$user_com_id' and post_id='$post_id'  ";
+															     
+					$run=mysqli_query($con, $update);
+														    //$con->query($update);
+														        		//$num_of_run=mysqli_num_rows($run);
+					if($run)
+					{
+						echo "<script>alert('Your report is processing!')</script>";
+					}
+					echo"You liked, please reload page!";
+				}
+				else
+				{
+					$insert="insert into vote(post_id, user_vote, date) values('$post_id','$user_com_id',NOW()) ";
+					 $run=mysqli_query($con, $insert);
+														    //$num_of_run=mysqli_num_rows($run);
+					if($run)
+					{
+						echo "<script>alert('Your report is processing!')</script>";
+					}
+					echo"insert new";
+				}	 */	
+			}			
 		}
-	}
+	
 }
 
 function user_posts(){

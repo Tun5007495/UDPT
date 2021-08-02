@@ -225,6 +225,7 @@ if(!isset($_SESSION['user_email'])){
 						</div>
 					</div><br>
 					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success'>View</button></a>
+					
 					<a href='functions/delete_post.php?post_id=$post_id' style='float:right';><button class='btn btn-danger'>Delete</button></a>
 				</div><br><br>
 				
@@ -252,6 +253,7 @@ if(!isset($_SESSION['user_email'])){
 						</div>
 					</div><br>
 					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success'>View</button></a>
+					
 					<a href='functions/delete_post.php?post_id=$post_id' style='float:right'+><button class='btn btn-danger'>Delete</button></a>
 				</div><br><br>
 				
