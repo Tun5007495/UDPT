@@ -148,9 +148,52 @@ function get_posts(){
 						<div class='row'>
 							<div class='col-sm-12'>
 								<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+								<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+															<!-- top-header -->
+									<div class='agile-main-top'>
+										<div class='container-fluid'>
+											<div class='row main-top-w3l py-2'>
+												<div class='col-lg-4 header-most-top'>
+												";
+													$temp=0;
+											        if($num_of_vote==1)
+											        {										        	
+											        	$temp=1;
+											        }
+
+											       	echo "
+											       	<form method='post'>
+											       	<input type='submit' name='vote' id='vote' value=";
+											       	if($temp==1)
+											       	{
+											       		echo "👍";
+											       		//echo"You liked this post";
+
+											       	}
+											       	else
+											       	{
+											       		echo "👎";
+											       		//echo "You unvote";
+											       		//echo"Like this post?";
+
+											       	}
+											       	echo"
+											       	 class='btn btn-success'  />
+											       	 <a href='single.php?post_id=$post_id' style='float:right;' ><button class='btn btn-info' >Comment</button></a><br>	
+											       	</form>";
+
+											       	if($temp==1)
+											       		echo"You liked this post";
+											       	else
+											       		echo"Like this post?";
+											       	echo"
+											    </div>
+											</div>
+										</div>
+									</div>
+
 							</div>
 						</div><br>
-						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>	
 					</div>
 					<div class='col-sm-3'>
 					</div>
@@ -422,7 +465,61 @@ function single_post()
 							</div>
 							<div class='row'>
 								<div class='col-sm-12'>
+
 									<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+																	<!-- top-header -->
+									<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+									<div class='agile-main-top'>
+										<div class='container-fluid'>
+											<div class='row main-top-w3l py-2'>
+												<div class='col-lg-4 header-most-top'>
+													<!-- <button class='btn btn-danger' name='like'> 👍</button> -->";
+
+													$temp=0;
+											        if($num_of_vote==1)
+											        {										        										        										
+											        	$temp=1;
+											        }
+
+											       	echo "
+											       	<form method='post'>
+											       	<input type='submit' name='vote' id='vote' value=";
+											       	if($temp==1)
+											       	{
+											       		echo "👍";
+											       		//echo"You liked this post";
+
+											       	}
+											       	else
+											       	{
+											       		echo "👎";
+											       		//echo "You unvote";
+											       		//echo"Like this post?";
+
+											       	}
+											       	echo"
+											       	 class='btn btn-success'  />
+											       	</form>";
+
+											       	if($temp==1)
+											       		echo"You liked this post";
+											       	else
+											       		echo"Like this post?";
+											       echo "
+
+												</div>
+												<div class='col-lg-8 header-right mt-lg-0 mt-2'>
+													<!-- header lists -->
+
+
+													<a href='#' data-toggle='modal' data-target='#report' class='btn btn-danger' >
+																 Report </a>
+													<!-- //header lists -->
+												</div>
+											</div>
+										</div>
+									</div>
+
 								</div>
 							</div><br>	
 						</div>

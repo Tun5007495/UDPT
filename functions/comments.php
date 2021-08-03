@@ -5,11 +5,19 @@
 
     $run_com = mysqli_query($con, $get_com);
 
-       
 
+    $user_com = $_SESSION['user_email'];
+    $get_vote_cmt = "select * from users where user_email='$user_com'";
+    $run_vote_cmt = mysqli_query($con, $get_vote_cmt);
+    $row_vote_cmt = mysqli_fetch_array($run_vote_cmt);
 
+    $user_vote_cmt = $row_vote_cmt['user_id'];
+    echo $user_vote_cmt;
 
-    while($row = mysqli_fetch_array($run_com)){
+            $post=$row['post_id'];
+
+    while($row = mysqli_fetch_array($run_com))
+    {
         $com = $row['comment'];
         $com_name = $row['comment_author'];
         $date = $row['date'];
@@ -18,10 +26,11 @@
         //id cua moi comment
         $id=$row['com_id'];
 
-        $qr="select * from commentvote where comment_id='$id' ";
+        $qr="select * from commentvote where com_id='$id' and user_vote_cmt= '$user_vote_cmt' ";
         $run=mysqli_query($con, $qr);
+
         $num=mysqli_num_rows($run);
-        $row=mysqli_fetch_array($run);
+        //$row=mysqli_fetch_array($run);
         echo"
             <div class='row'>
                 <div class='col-md-6 col-md-offset-3'>
@@ -33,23 +42,16 @@
                                 <h3> <p>$point 👍</p> </h3>
 
                                     <!-- top-header -->
-<!--                                <div class='agile-main-top'>
+                                    <div class='agile-main-top'>
                                         <div class='container-fluid'>
                                             <div class='row main-top-w3l py-2'>
-                                                <div class='col-lg-4 header-most-top'> -->
+                                                <div class='col-lg-4 header-most-top'> 
                                                     ";
-/*
-                                                    $temp=0;
-                                                    if($num_of_vote==1)
-                                                    {                                       
-                                                        $temp=1;
-                                                    }
-
                                                     echo "
 
                                                     <form method='post'>
-                                                    <input type='submit' name='vote' id='vote' value=";
-                                                    if($temp==1)
+                                                    <input type='submit' name='commentvote' id='commentvote' value=";
+                                                    if($num==1)
                                                     {
                                                         echo "👍";
                                                     }
@@ -58,24 +60,50 @@
                                                         echo "👎";
                                                     }
                                                     echo"
-                                                     class='btn btn-default'  /> 
+                                                     class='btn btn-success'  /> 
                                                     </form>";
 
-                                                    if($temp==1)
-                                                        echo"You liked this post";
+                                                    if($num==1)
+                                                        echo"You liked this comment";
                                                     else
-                                                        echo"Like this post?"; */
+                                                        echo"Like this comment?"; 
                                                     echo     "   
-                                           <!--       </div>
+                                               </div>
                                             </div>
                                         </div>
-                                    </div>-->
+                                    </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         ";
+        if(isset($_POST['commentvote']))
+            {
+
+                if($num==1)
+                { //chay oke
+                    $delete_qr="delete from commentvote where com_id='$id' and user_vote_cmt='$user_vote_cmt'";
+                    if(mysqli_query($con, $delete_qr))
+                    {
+                        $update_qr="update comments set CommentPoint=CommentPoint-1 where com_id='$id'";
+                        $run=mysqli_query($con, $update_qr);
+                        //$result=mysqli_affected_rows($con);
+                    }
+                }
+                else
+                {
+                    $insert_qr="insert into commentvote (com_id,post_id, user_vote_cmt) values('$id','$get_id','$user_vote_cmt')  ";
+                   if(mysqli_query($con, $insert_qr))
+                    {
+                        $update_qr="update comments set CommentPoint=CommentPoint+1 where com_id='$id' ";
+                        $run=mysqli_query($con, $update_qr);
+                    //$result=mysqli_affected_rows($con);
+                    }
+
+                }
+                //echo "<script>alert('OK!')</script>";
+            }
     }
 
 ?>
