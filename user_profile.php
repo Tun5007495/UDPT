@@ -128,6 +128,11 @@ if(!isset($_SESSION['user_email'])){
                     $content = $row_posts['post_content'];
                     $upload_image = $row_posts['upload_image'];
                     $post_date = $row_posts['post_date'];
+                    $postpoint=$row_posts['PostPoint'];
+
+                    $comment="select *  from comments where post_id='$post_id'  ";
+                    $run_comment=mysqli_query($con, $comment);
+                    $commentpoint=mysqli_num_rows($run_comment);
 
                     $user = "select * from users where user_id='$user_id' AND posts='yes'";
 
@@ -179,11 +184,14 @@ if(!isset($_SESSION['user_email'])){
                     <div class='row'>
                         <div class='col-sm-12'>
                             <img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+                            <h3>$postpoint 👍, $commentpoint &#9997</h3>
                         </div>
+                            <a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>View more</button></a><br>
                     </div><br>
-                    <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success'>View</button></a>
+            <!--        <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success'>View</button></a>
                     
                     <a href='functions/delete_post.php?post_id=$post_id' style='float:right';><button class='btn btn-danger'>Delete</button></a>
+            -->
                 </div><br><br>";
                     }
                     else if(strlen($content) >= 1 && strlen($upload_image) >= 1)
@@ -203,12 +211,15 @@ if(!isset($_SESSION['user_email'])){
                         </div>
                     </div>
                     <div class='row'>
-                        <div class='col-sm-12>
-                            <p>$content</p>
+                        <div class='col-sm-12'>
+                            <h3><p>$content</p></h3>
                             <img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+                            <h3>$postpoint 👍, $commentpoint &#9997</h3>
+
                         </div>
+                            <a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>View more</button></a><br>
                     </div><br>
-                    <a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
+                    
                    <!-- <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success'>View</button></a>
                     
                     <a href='functions/delete_post.php?post_id=$post_id' style='float:right'+><button class='btn btn-danger'>Delete</button></a> -->
@@ -279,14 +290,18 @@ if(!isset($_SESSION['user_email'])){
                         </div>
                     </div>
                     <div class='row'>
-                        <div class='col-sm-2'>
+                        <div class='col-sm-12'>
                         </div>
-                        <div class='col-sm-6>
+                        <div class='col-sm-6'>
                             <h3><p>$content</p></h3>
+                            <h3>$postpoint 👍, $commentpoint &#9997</h3>
                         </div>
-                        <div class='col-sm-4'>
-                            <a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
+
+                         <div class='col-sm-4'>
+
+            <!--          <a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>  -->
                         </div>
+                         <a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>View more</button></a><br>
                     </div>
                 </div>"; 
                     }

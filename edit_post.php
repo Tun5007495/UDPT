@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-session_start();
+//session_start();
 include("includes/header.php");
 
 if(!isset($_SESSION['user_email'])){
