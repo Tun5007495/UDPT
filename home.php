@@ -10,12 +10,20 @@ if(!isset($_SESSION['user_email'])){
 <html>
 <head>
     <?php
+    if($_SESSION['user_email']!="guest")
+    {
         $user = $_SESSION['user_email'];
         $get_user = "select * from users where user_email='$user'";
         $run_user = mysqli_query($con,$get_user);
         $row = mysqli_fetch_array($run_user);
 
         $user_name = $row['user_name'];
+    }
+    else
+    {
+        $user_name="guest";
+    }
+
     ?>
     <title><?php echo "$user_name"; ?></title>
     <meta charset="utf-8">

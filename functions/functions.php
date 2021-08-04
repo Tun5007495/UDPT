@@ -4,8 +4,10 @@ $con = mysqli_connect("localhost","root","","social_network") ;
 
 //function for inserting post
 
-function insertPost(){
-	if(isset($_POST['sub'])){
+function insertPost()
+{
+	if(isset($_POST['sub']))
+	{
 		global $con;
 		global $user_id;
 
@@ -37,8 +39,10 @@ function insertPost(){
 				if($upload_image=='' && $content == ''){
 					echo "<script>alert('Error Occured while uploading!')</script>";
 					echo "<script>window.open('home.php', '_self')</script>";
-				}else{
-					if($content==''){
+				}else
+				{
+					if($content=='')
+					{
 						move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
 						$insert = "insert into posts (user_id,post_content,upload_image,post_date) values ('$user_id','No','$upload_image.$random_number',NOW())";
 						$run = mysqli_query($con, $insert);
@@ -52,7 +56,9 @@ function insertPost(){
 						}
 
 						exit();
-					}else{
+					}
+					else
+					{
 						$insert = "insert into posts (user_id,post_content,post_date) values ('$user_id','$content',NOW())";
 						$run = mysqli_query($con, $insert);
 
@@ -68,6 +74,7 @@ function insertPost(){
 			}
 		}
 	}
+
 }
 
 
@@ -117,9 +124,14 @@ function get_posts(){
 		$run_com = mysqli_query($con, $get_com);
 		$row_com = mysqli_fetch_array($run_com);
 
-		$user_com_id = $row_com['user_id'];
-		$user_com_name = $row_com['user_name'];
-		$user_com_email=$row_com['user_email'];
+
+		//$user_com_id = $row_com['user_id'];
+		//$user_com_name =() $row_com['user_name'];
+		//$user_com_email=$row_com['user_email'];
+		$user_com_id = ($_SESSION['user_email']!="guest")? $row_com['user_id'] : "guest";
+		$user_com_name = ($_SESSION['user_email']!="guest")? $row_com['user_name'] : "guest";
+		$user_com_email = ($_SESSION['user_email']!="guest")? $row_com['user_email'] : "guest";
+		
 
 		$qr="select * from vote where post_id='$post_id' and user_vote='$user_com_id'";
 		$run_vote=mysqli_query($con, $qr);
@@ -139,7 +151,8 @@ function get_posts(){
 								<p><img src='users/$user_image' class='img_circle' width='100px' height='100px'></p>
 							</div>
 							<div class='col-sm-6'>
-								<h3><a style='text-decoration:none; cursor:pointer; color #3897f0;' href='user_profile.php?u_id=$user'>$user_name</a></h3>
+								<h3><a style='text-decoration:none; cursor:pointer; color #3897f0;'  href='user_profile.php?u_id=";echo $user_id;
+								 echo" '>"; echo $user_name; echo " </a></h3>
 								<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
 							</div>
 							<div class='col-sm-4'>
@@ -212,7 +225,8 @@ function get_posts(){
 								<p><img src='users/$user_image' class='img_circle' width='100px' height='100px'></p>
 							</div>
 							<div class='col-sm-6'>
-								<h3><a style='text-decoration:none; cursor:pointer; color #3897f0;' href='user_profile.php?u_id=$user'>$user_name</a></h3>
+								<h3><a style='text-decoration:none; cursor:pointer; color #3897f0;'  href='user_profile.php?u_id=";echo $user_id;
+								 echo" '>"; echo $user_name; echo " </a></h3>
 								<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
 							</div>
 							<div class='col-sm-4'>
@@ -284,7 +298,8 @@ function get_posts(){
 								<p><img src='users/$user_image' class='img_circle' width='100px' height='100px'></p>
 							</div>
 							<div class='col-sm-6'>
-								<h3><a style='text-decoration:none; cursor:pointer; color #3897f0;' href='user_profile.php?u_id=$user'>$user_name</a></h3>
+								<h3><a style='text-decoration:none; cursor:pointer; color #3897f0;'  href='user_profile.php?u_id=";echo $user_id;
+								 echo" '>"; echo $user_name; echo " </a></h3>
 								<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
 							</div>
 							<div class='col-sm-4'>
@@ -409,10 +424,12 @@ function single_post()
 		$run_com = mysqli_query($con, $get_com);
 		$row_com = mysqli_fetch_array($run_com);
 
-		$user_com_id = $row_com['user_id'];
-		$user_com_name = $row_com['user_name'];
-		$user_com_email=$row_com['user_email'];
-
+		//$user_com_id = $row_com['user_id'];
+		//$user_com_name = $row_com['user_name'];
+		//$user_com_email=$row_com['user_email'];
+		$user_com_id = ($_SESSION['user_email']!="guest")? $row_com['user_id'] : "guest";
+		$user_com_name = ($_SESSION['user_email']!="guest")? $row_com['user_name'] : "guest";
+		$user_com_email = ($_SESSION['user_email']!="guest")? $row_com['user_email'] : "guest";
 
 		//vote:
 		$qr="select * from vote where post_id='$post_id' and user_vote='$user_com_id'";
@@ -773,23 +790,32 @@ function single_post()
 				}
 				if(isset($_POST['send_admin']))
 				{
-					$report = htmlentities($_POST['content_report']);
+					if($_SESSION['user_email']!="guest") 
+					{
+						$report = htmlentities($_POST['content_report']);
 
-					if($report == ""){
+						if($report == "")
+						{
 						echo "<script>alert('Please enter your report!')</script>";
 						//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+						}
+						else
+						{
+							$insert= "insert into report(post_id, user_report, username_report, email_report, content, date) values('$post_id', '$user_com_id','$user_com_name','$user_com_email','$report',NOW())";
+							$run=mysqli_query($con, $insert);
+							if($run)
+							{
+								echo "<script>alert('Your report is processing!')</script>";
+							}
+
+						}//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+					
 					}
 					else
 					{
-						$insert= "insert into report(post_id, user_report, username_report, email_report, content, date) values('$post_id', '$user_com_id','$user_com_name','$user_com_email','$report',NOW())";
-						$run=mysqli_query($con, $insert);
-						if($run)
-						{
-						echo "<script>alert('Your report is processing!')</script>";
-						}
-
-						//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+						echo "<script>alert('Please Sign In!')</script>";
 					}
+					
 				}
 		}
 			 //else condition ending
@@ -813,49 +839,66 @@ function single_post()
 
 			if(isset($_POST['reply']))
 			{
-				$comment = htmlentities($_POST['comment']);
-
-				if($comment == "")
+				if($_SESSION['user_email']!="guest") 
 				{
-					echo "<script>alert('Please enter your comment!')</script>";
-					//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+					$comment = htmlentities($_POST['comment']);
+
+					if($comment == "")
+					{
+						echo "<script>alert('Please enter your comment!')</script>";
+						//echo "<script>window.open('single.php?post_id = $post_id' , '_self')</script>";
+					}
+					else
+					{
+						$insert = "insert into comments (post_id, user_id, comment, comment_author,date) values ('$post_id','$user_id','$comment','$user_com_name',NOW())";
+
+						$run = mysqli_query($con, $insert);
+						if($run)
+						{
+							
+							//echo "<script>
+							echo "<script>alert('Your comment added!')</script>";
+							//echo "<script>window.open('single.php?post_id='.'$post_id')</script> ";
+						}
+							//echo "<script>window.location('single.php?post_id='.'$post_id')</script>";
+							
+					}
 				}
 				else
 				{
-					$insert = "insert into comments (post_id, user_id, comment, comment_author,date) values ('$post_id','$user_id','$comment','$user_com_name',NOW())";
-
-					$run = mysqli_query($con, $insert);
-					if($run)
-					{
-						
-						//echo "<script>
-						echo "<script>alert('Your comment added!')</script>";
-						//echo "<script>window.open('single.php?post_id='.'$post_id')</script> ";
-					}
-						//echo "<script>window.location('single.php?post_id='.'$post_id')</script>";
-						
+					echo "<script>alert('Please Sign In!')</script>";
 				}
+				
 			}
 			if(isset($_POST['vote']))
 			{
-				$result=false;
-				if($num_of_vote==1)
+				
+				if($_SESSION['user_email']!="guest") 
 				{
-					$delete_qr="delete from vote where post_id='$post_id' and user_vote='$user_com_id'";
-					$run= mysqli_query($con, $delete_qr);
-					$update_qr="update posts set PostPoint=PostPoint-1 where post_id='$post_id' ";
-					$run=mysqli_query($con, $update_qr);
-					$result=mysqli_affected_rows($con);
+					//$result=false;
+					if($num_of_vote==1)
+					{
+						$delete_qr="delete from vote where post_id='$post_id' and user_vote='$user_com_id'";
+						$run= mysqli_query($con, $delete_qr);
+						$update_qr="update posts set PostPoint=PostPoint-1 where post_id='$post_id' ";
+						$run=mysqli_query($con, $update_qr);
+						//$result=mysqli_affected_rows($con);
+					}
+					else
+					{
+						$insert_qr="insert into vote(post_id, user_vote, date) values('$post_id','$user_com_id',NOW())";
+						$run=mysqli_query($con, $insert_qr);
+						$update_qr="update posts set PostPoint=PostPoint+1 where post_id='$post_id' ";
+						$run=mysqli_query($con, $update_qr);
+						//$result=mysqli_affected_rows($con);
+
+					}
 				}
 				else
 				{
-					$insert_qr="insert into vote(post_id, user_vote, date) values('$post_id','$user_com_id',NOW())";
-					$run=mysqli_query($con, $insert_qr);
-					$update_qr="update posts set PostPoint=PostPoint+1 where post_id='$post_id' ";
-					$run=mysqli_query($con, $update_qr);
-					$result=mysqli_affected_rows($con);
-
+					echo "<script>alert('Please Sign In!')</script>";
 				}
+
 
 				/*if($temp==1)
 				{
@@ -899,11 +942,11 @@ function single_post()
 
 function user_posts(){
 	global $con;
-
+	//session_start();
 	if(isset($_GET['u_id'])){
 		$u_id = $_GET['u_id'];
-
 	}
+	//echo $u_id;
 	$get_posts = "select * from posts where user_id='$u_id' ORDER by 1 DESC LIMIT 5";
 
 	$run_posts = mysqli_query($con, $get_posts);
@@ -974,6 +1017,10 @@ function user_posts(){
 							<div class='row'>
 								<div class='col-sm-12'>
 									<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+									<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+                        			</div>
+                            			<a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>View more</button></a><br>
+                    				</div><br>
 								</div>
 							</div><br>	
 						</div>
@@ -1002,9 +1049,13 @@ function user_posts(){
 							</div>
 							<div class='row'>
 								<div class='col-sm-12'>
-									<p>$content</p>
-									<p>$post_point &#128151, $post_comment_point &#9997</p>
+									<h3><p>$content</p></h3>
+								
 									<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+									<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+									</div>
+                            			<a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>View more</button></a><br>
+                    				</div><br>
 								</div>
 							</div><br>	
 						</div>
@@ -1033,7 +1084,10 @@ function user_posts(){
 							<div class='row'>
 								<div class='col-sm-12'>
 								<h3><p>$content</p></h3>
-								<p>$post_point &#128151, $post_comment_point &#9997</p>
+								<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+								</div>
+                            		<a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>View more</button></a><br>
+                    			</div><br>
 								</div>
 							</div><br>
 								
@@ -1062,6 +1116,14 @@ function results(){
 		$content = $row_posts['post_content'];
 		$upload_image = $row_posts['upload_image'];
 		$post_date = $row_posts['post_date'];
+
+		$post_point=substr($row_posts['PostPoint'],0,20);
+
+		//Lay so luong comment trong bai post
+		$comment="select count(*) as CommentNumber from comments where post_id='$post_id' ";
+		$run_comment = mysqli_query($con, $comment);
+		$row_comment = mysqli_fetch_array($run_comment);
+		$post_comment_point=substr($row_comment['CommentNumber'],0,20);
 
 		$user = "select * from users where user_id = '$user_id' AND posts='yes'";
 
@@ -1095,6 +1157,10 @@ function results(){
 						<div class='row'>
 							<div class='col-sm-12'>
 								<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+								<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+								</div>
+                            		<a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>View more</button></a><br>
+                    			</div><br>
 							</div>
 						</div><br>	
 					</div>
@@ -1123,8 +1189,12 @@ function results(){
 						</div>
 						<div class='row'>
 							<div class='col-sm-12'>
-								<p>$content</p>
+								<h3><p>$content</p></h3>
 								<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+								<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+								</div>
+                            		<a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>View more</button></a><br>
+                    			</div><br>
 							</div>
 						</div><br>	
 					</div>
@@ -1153,6 +1223,10 @@ function results(){
 						<div class='row'>
 							<div class='col-sm-12'>
 							<h3><p>$content</p></h3>
+							<h2><p>$post_point 👍, $post_comment_point &#9997</p></h2>
+								</div>
+                            		<a href = 'single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>View more</button></a><br>
+                    			</div><br>
 							</div>
 						</div><br>
 							

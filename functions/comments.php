@@ -5,14 +5,20 @@
 
     $run_com = mysqli_query($con, $get_com);
 
-
+    if($_SESSION['user_email']!="guest")
+    {
     $user_com = $_SESSION['user_email'];
     $get_vote_cmt = "select * from users where user_email='$user_com'";
     $run_vote_cmt = mysqli_query($con, $get_vote_cmt);
     $row_vote_cmt = mysqli_fetch_array($run_vote_cmt);
 
     $user_vote_cmt = $row_vote_cmt['user_id'];
-    echo $user_vote_cmt;
+    }
+    //echo $user_vote_cmt;
+    else
+    {
+        $user_vote_cmt="guest";
+    }
 
             $post=$row['post_id'];
 
@@ -78,7 +84,13 @@
                 </div>
             </div>
         ";
-        if(isset($_POST['commentvote']))
+
+
+
+    }
+             if(isset($_POST['commentvote']))
+        {
+            if($_SESSION['user_email']!="guest")   
             {
 
                 if($num==1)
@@ -103,7 +115,12 @@
 
                 }
                 //echo "<script>alert('OK!')</script>";
-            }
-    }
+            } 
+            else
+            {
+                echo "<script>alert('Please Sign In!')</script>";
+                //header("location: signin.php");
+            } 
+        }
 
 ?>

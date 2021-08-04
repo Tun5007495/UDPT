@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-//session_start();
+// moi vua cmt 4/8/2021 session_start();
 include("includes/header.php");
 
 if(!isset($_SESSION['user_email'])){

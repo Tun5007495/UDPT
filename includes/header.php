@@ -16,7 +16,10 @@ include("functions/functions.php");
         </div>
         <div class="collapse navbar-collapse" id="#bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+
                 <?php
+                if($_SESSION['user_email']!="guest")
+                {
                     $user = $_SESSION['user_email'];
                     $get_user = "select * from users where user_email='$user'";
                     $run_user = mysqli_query($con,$get_user);
@@ -41,22 +44,26 @@ include("functions/functions.php");
                     $user_posts = "select * from posts where user_id='$user_id'"; 
                     $run_posts = mysqli_query($con,$user_posts); 
                     $posts = mysqli_num_rows($run_posts);
+                }
+
                 ?>
 
+                <?php if($_SESSION['user_email']!="guest")
+                { ?>
                     <li><a href='profile.php?<?php echo "u_id=$user_id" ?>'><?php echo "$first_name"; ?></a></li>
                     <!-- <li><a href="home.php">Home</a></li> -->
                     <li><a href="members.php">Find People</a></li>
                     <!-- <li><a href="messages.php?u_id=new">Messages</a></li> -->
-                    <?php
-						echo"
+                    
+						
 						<li class='dropdown'>
 							<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span><i class='glyphicon glyphicon-chevron-down'></i></span></a>
 							<ul class='dropdown-menu'>
 								<li>
-									<a href='my_post.php?u_id=$user_id'>My Posts <span class='badge badge-secondary'>$posts</span></a>
+									<a href='my_post.php? <?php echo "u_id=$user_id" ?>'>My Posts <span class='badge badge-secondary'> <?php echo $posts ?> </span></a>
 								</li>
 								<li>
-									<a href='edit_profile.php?u_id=$user_id'>Edit Account</a>
+									<a href='edit_profile.php?<?php echo "u_id=$user_id" ?>'>Edit Account</a>
 								</li>
 								<li role='separator' class='divider'></li>
 								<li>
@@ -64,8 +71,15 @@ include("functions/functions.php");
 								</li>
 							</ul>
 						</li>
-						";
-					?>
+						
+				<?php }
+                else 
+                { ?>
+                    <li><a href="members.php">Find People</a></li>
+                    <li><a href='signup.php'>SignUp</a></li>
+                    <li><a href='signin.php'>SignIn</a></li>          
+               <?php } ?> 
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">

@@ -86,17 +86,24 @@ if(!isset($_SESSION['user_email'])){
                         <li class='list-group-item' title='Username'><strong>$f_name $l_name</strong></li>
                         <li class='list-group-item' title='User Status'><strong style='color:grey;'>$describe_user</strong></li>
                         <li class='list-group-item' title='Gender'><strong>$gender</strong></li>
-                        <li class='list-group-item' title='Country'><strong>$user_country</strong></li>
+                        <li class='list-group-item' title='Country'><strong>$country</strong></li>
                         <li class='list-group-item' title='User Registration Date'><strong>$register_date</strong></li>
                     </ul>
             ";
+            if($_SESSION['user_email']!="guest") 
+            {
+                $user = $_SESSION['user_email'];
+                $get_user = "select * from users where user_email='$user'";
+                $run_user = mysqli_query($con, $get_user);
+                $row = mysqli_fetch_array($run_user);
 
-            $user = $_SESSION['user_email'];
-            $get_user = "select * from users where user_email='$user'";
-            $run_user = mysqli_query($con, $get_user);
-            $row = mysqli_fetch_array($run_user);
+                $userown_id = $row['user_id'];
+            }
+            else
+            {
+                $userown_id="guest";
+            }
 
-            $userown_id = $row['user_id'];
 
             if($user_id == $userown_id){
                 echo"<a href='edit_profile.php?u_id=$userown_id' class='btn btn-success'/>Edit Profile</a><br><br><br>";
