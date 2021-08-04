@@ -41,14 +41,48 @@ if(!isset($_SESSION['user_email'])){
         <form action="home.php?id=<?php echo $user_id; ?>" method="post" id="f" enctype="multipart/form-data">
         <textarea class="form-control" id="content" rows="4" name="content" placeholder="What's in your mind?"></textarea><br>
         <label class="btn btn-warning" id="upload_image_button">Select Image
-        <input type="file" name="upload_image" size="30"></input>
+            <input type="file" name="upload_image" size="30"></input>
         </label>
+        <label class="btn btn-warning" for="tags" id="tags">Choose a tag for post:  </label>
+            <select name="choosetag">
+                <?php 
+
+                $qr_tag="select * from tags";
+                $run_tag=mysqli_query($con, $qr_tag);
+                while($row=mysqli_fetch_array($run_tag))
+                {
+                    $tag_name=$row['tag_name']; 
+                    $tag_id=$row['tag_id'];?>
+                    <option value="<?php echo $tag_id;?>"><?php echo $tag_name;?></option>
+                    <?php
+                }
+                ?>
+            </select>
+        </label>
+        <label class="btn btn-warning" for="categories" id="categories">Choose category for post:  </label>
+            <select name="choosecategory">
+                <?php 
+
+                $qr_category="select * from categories";
+                $run_category=mysqli_query($con, $qr_category);
+                while($row=mysqli_fetch_array($run_category))
+                {
+                    $category_name=$row['category_name']; 
+                    $category_id=$row['category_id'];?>
+                    <option value="<?php echo $category_id;?>"><?php echo $category_name;?></option>
+                    <?php
+                }
+                ?>
+            </select>
+        </label>
+        <br><br>
         <button id="btn-post" class="btn btn-success" name="sub">Post</button>
         </form>
         <?php insertPost(); ?>
         </center>
     </div>
 </div>
+
 <div class="row">
     <div class="sol-sm-12">
         <center><h2><strong>News Feed</strong></h2></center>

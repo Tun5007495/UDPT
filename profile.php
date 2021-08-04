@@ -183,7 +183,7 @@ if(!isset($_SESSION['user_email'])){
 			$u_id = $_GET['u_id'];
 		}
 		//echo $u_id;
-		$get_posts = "select * from posts where user_id ='$u_id' ORDER by 1 DESC LIMIT 5 ";
+		$get_posts = "select * from posts where user_id ='$u_id' ORDER by 1 DESC  ";
 
 		$run_posts = mysqli_query($con, $get_posts);
 

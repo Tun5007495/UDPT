@@ -5,7 +5,6 @@ $con = mysqli_connect("localhost","root","","social_network") or die("Connection
 if(isset($_GET['post_id'])){
     $post_id = $_GET['post_id'];
 
-    
     $delete_commentvote="delete from commentvote where post_id='$post_id' ";
     $run_delete_commentvote=mysqli_query($con, $delete_commentvote);
     
@@ -18,9 +17,12 @@ if(isset($_GET['post_id'])){
     $run_delete = mysqli_query($con, $delete_post);
     $num=mysqli_affected_rows($con);
 
+    //$user=$_POST['u_id'];
+
     if($num!=0){
         echo "<script>alert('A Post have been deleted!')</script>";
-        //echo "<script>window.open('..home/home.php, '_self')</script>";
+
+      //  echo "<script>window.location('profile.php?u_id= "; echo $user; echo"')</script>";
     }
 
 

@@ -15,14 +15,15 @@ function insertPost()
 		$upload_image = $_FILES['upload_image']['name'];
 		$image_tmp = $_FILES['upload_image']['tmp_name'];
 		$random_number = rand(1, 100);
-
+		$tag=$_POST['choosetag'];
+		$category=$_POST['choosecategory'];
 		if(strlen($content) > 250){
 			echo "<script>alert('Please Use 250 or less than 250 words!')</script>";
 			echo "<script>window.open('ho/me.php', '_self')</script>";
 		}else{
 			if(strlen($upload_image) >= 1 && strlen($content) >= 1){
 				move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
-				$insert = "insert into posts (user_id, post_content, upload_image, post_date) values('$user_id', '$content', '$upload_image.$random_number', NOW())";
+				$insert = "insert into posts (user_id, post_content, upload_image, post_date, tag_id, category_id) values('$user_id', '$content', '$upload_image.$random_number', NOW(), '$tag', '$category')";
 
 				$run = mysqli_query($con, $insert);
 
@@ -44,7 +45,7 @@ function insertPost()
 					if($content=='')
 					{
 						move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
-						$insert = "insert into posts (user_id,post_content,upload_image,post_date) values ('$user_id','No','$upload_image.$random_number',NOW())";
+						$insert = "insert into posts (user_id,post_content,upload_image,post_date,tag_id, category_id) values ('$user_id','No','$upload_image.$random_number',NOW(),'$tag','$category')";
 						$run = mysqli_query($con, $insert);
 
 						if($run){
@@ -59,7 +60,7 @@ function insertPost()
 					}
 					else
 					{
-						$insert = "insert into posts (user_id,post_content,post_date) values ('$user_id','$content',NOW())";
+						$insert = "insert into posts (user_id,post_content,post_date, tag_id,category_id) values ('$user_id','$content',NOW(), '$tag', '$category')";
 						$run = mysqli_query($con, $insert);
 
 						if($run){
@@ -97,7 +98,7 @@ function get_posts(){
 	while($row_posts = mysqli_fetch_array($run_posts)){
 		$post_id = $row_posts['post_id'];
 		$user_id = $row_posts['user_id'];
-		$content = substr($row_posts['post_content'],0,40);
+		$content = substr($row_posts['post_content'],0,1000);
 		$upload_image = $row_posts['upload_image'];
 		$post_date = $row_posts['post_date'];
 
@@ -166,7 +167,7 @@ function get_posts(){
 									<div class='agile-main-top'>
 										<div class='container-fluid'>
 											<div class='row main-top-w3l py-2'>
-												<div class='col-lg-4 header-most-top'>
+												
 												";
 													$temp=0;
 											        if($num_of_vote==1)
@@ -174,33 +175,19 @@ function get_posts(){
 											        	$temp=1;
 											        }
 
-											       	echo "
-											       	<form method='post'>
-											       	<input type='submit' name='vote' id='vote' value=";
-											       	if($temp==1)
-											       	{
-											       		echo "👍";
-											       		//echo"You liked this post";
+											       	
 
-											       	}
-											       	else
-											       	{
-											       		echo "👎";
-											       		//echo "You unvote";
-											       		//echo"Like this post?";
-
-											       	}
 											       	echo"
-											       	 class='btn btn-success'  />
-											       	 <a href='single.php?post_id=$post_id' style='float:right;' ><button class='btn btn-info' >Comment</button></a><br>	
-											       	</form>";
+											       	 
+											       	<a href='single.php?post_id=$post_id' style='float:right;' ><button class='btn btn-info' >Comment</button></a><br> 
+											       	";
 
 											       	if($temp==1)
 											       		echo"You liked this post";
 											       	else
 											       		echo"Like this post?";
 											       	echo"
-											    </div>
+											    
 											</div>
 										</div>
 									</div>
@@ -242,38 +229,27 @@ function get_posts(){
 									<div class='agile-main-top'>
 										<div class='container-fluid'>
 											<div class='row main-top-w3l py-2'>
-												<div class='col-lg-4 header-most-top'>
+												
+													
 													";
-
 													$temp=0;
 											        if($num_of_vote==1)
-											        {										
+											        {										        	
 											        	$temp=1;
 											        }
-
-											       	echo "
-
-											       	<form method='post'>
-											       	<input type='submit' name='vote' id='vote' value=";
-											       	if($temp==1)
-											       	{
-											       		echo "👍";
-											       	}
-											       	else
-											       	{
-											       		echo "👎";
-											       	}
+													
 											       	echo"
-											       	 class='btn btn-success'  />
+											       	 
 											       	 <a href='single.php?post_id=$post_id' style='float:right;' ><button class='btn btn-info' >Comment</button></a><br>	
-											       	</form>";
+											       	";
 
 											       	if($temp==1)
 											       		echo"You liked this post";
 											       	else
 											       		echo"Like this post?";
 											       	echo"	
-											      </div>
+
+											     
 											</div>
 										</div>
 									</div>
@@ -313,7 +289,8 @@ function get_posts(){
 									<div class='agile-main-top'>
 										<div class='container-fluid'>
 											<div class='row main-top-w3l py-2'>
-												<div class='col-lg-4 header-most-top'>
+												
+
 												";
 													$temp=0;
 											        if($num_of_vote==1)
@@ -321,33 +298,16 @@ function get_posts(){
 											        	$temp=1;
 											        }
 
-											       	echo "
-											       	<form method='post'>
-											       	<input type='submit' name='vote' id='vote' value=";
-											       	if($temp==1)
-											       	{
-											       		echo "👍";
-											       		//echo"You liked this post";
-
-											       	}
-											       	else
-											       	{
-											       		echo "👎";
-											       		//echo "You unvote";
-											       		//echo"Like this post?";
-
-											       	}
 											       	echo"
-											       	 class='btn btn-success'  />
-											       	 <a href='single.php?post_id=$post_id' style='float:right;' ><button class='btn btn-info' >Comment</button></a><br>	
-											       	</form>";
+											       <a href='single.php?post_id=$post_id' style='float:right;' ><button class='btn btn-info' >Comment</button></a><br>
+											       	";
 
 											       	if($temp==1)
 											       		echo"You liked this post";
 											       	else
 											       		echo"Like this post?";
 											       	echo"
-											    </div>
+											    
 											</div>
 										</div>
 									</div>
