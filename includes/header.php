@@ -57,7 +57,7 @@ include("functions/functions.php");
                     
 						
 						<li class='dropdown'>
-							<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span><i class='glyphicon glyphicon-chevron-down'></i></span></a>
+							<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span><i class='glyphicon glyphicon-chevron-down'></i> See more...</span></a>
 							<ul class='dropdown-menu'>
 								<li>
 									<a href='my_post.php? <?php echo "u_id=$user_id" ?>'>My Posts <span class='badge badge-secondary'> <?php echo $posts ?> </span></a>
@@ -79,6 +79,54 @@ include("functions/functions.php");
                     <li><a href='signup.php'>SignUp</a></li>
                     <li><a href='signin.php'>SignIn</a></li>          
                <?php } ?> 
+                        <li class='dropdown'>
+                            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span>Categories</span></a>
+                            <ul class='dropdown-menu'>
+                                <?php 
+
+                                        $qr_category="select * from categories";
+                                        $run_category=mysqli_query($con, $qr_category);
+                                        while($row=mysqli_fetch_array($run_category))
+                                        {
+                                            $category_name=$row['category_name']; 
+                                            $category_id=$row['category_id'];?>
+                                            <li>
+                                                <a href="result.php?value=<?php echo $category_name;?> ">
+                                                    <form class="navbar-form navbar-left" method="get" action="category_post.php">
+                                                    <button type="submit" class="btn btn-info" name="search" value="<?php echo $category_id;?>" ><?php echo $category_name;?></button>
+                                                    </form>
+                                                </a>
+                                                    
+                                            </li>
+                                            <?php
+                                        }
+                                ?>
+                            </ul>
+                        </li>
+                         <li class='dropdown'>
+                            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span>Tags</span></a>
+                            <ul class='dropdown-menu'>
+                                <?php 
+
+                                        $qr_tag="select * from tags";
+                                        $run_tag=mysqli_query($con, $qr_tag);
+                                        while($row=mysqli_fetch_array($run_tag))
+                                        {
+                                            $tag_name=$row['tag_name']; 
+                                            $tag_id=$row['tag_id'];?>
+                                            <li>
+                                                <a href="result.php?value=<?php echo $category_name;?> ">
+                                                    <form class="navbar-form navbar-left" method="get" action="tag_post.php">
+                                                    <button type="submit" class="btn btn-info" name="search" value="<?php echo $tag_id;?>" ><?php echo $tag_name;?></button>
+                                                    </form>
+                                                </a>
+                                                    
+                                            </li>
+                                            <?php
+                                        }
+                                ?>
+                            </ul>
+                        </li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -68,7 +68,7 @@
                         <input type="email" name="email" placeholder="Email" required="required" class="form-control input-md"><br>
                         <div class="overlap-text">
                             <input type="password" name="pass" placeholder="Password" required="required" class="form-control input-md"><br>
-                            <!-- <a style="text-decoration:none; float:right;color:#187fab;"data-toggle="tooltip" title="Reset Password" href="forgot_password.php">Forgot?</a> -->
+                             <a style="text-decoration:none; float:right;color:#187fab;"data-toggle="tooltip" title="Reset Password" href="forgot_password.php">Forgot?</a> 
                         </div>
                         <a style="text-decoration:none; float:right;color:#187fab;"data-toggle="tooltip" title="Create Account!" href="signup.php">Don't have an account?</a><br><br>
                         <center><button id="signin" class="btn btn-info btn-lg" name="login">Login</button></center>

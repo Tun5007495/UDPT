@@ -82,12 +82,58 @@ if(!isset($_SESSION['user_email'])){
         </center>
     </div>
 </div>
+<!--
+<style>
+aside {
+  width: 50px;
+  padding-left: 20px;
+  margin-left: 50px;
+  float: left;
+}
+.news
+{
+   padding-left: 700px;
+}
+</style>
+<br><br>
 
-<div class="row">
-    <div class="sol-sm-12">
-        <center><h2><strong>News Feed</strong></h2></center>
-        <?php echo get_posts(); ?>
-    </div>
+<div>
+    <aside><h1><p>Categories</p></h1></aside>
+    <ul><br><br><br><br>
+        <?php 
+         $qr_category="select * from categories";
+                $run_category=mysqli_query($con, $qr_category);
+                while($row=mysqli_fetch_array($run_category))
+                {
+                    $category_name=$row['category_name']; 
+                    $category_id=$row['category_id'];?>
+                    <h4><li><?php echo $category_name;?></li></h4>
+                    <?php
+                }
+                ?>
+    </ul>
 </div>
+
+<div>
+    <aside><h1><p>Categories</p></h1></aside>
+    <ul><br><br><br><br>
+        <?php 
+         $qr_category="select * from categories";
+                $run_category=mysqli_query($con, $qr_category);
+                while($row=mysqli_fetch_array($run_category))
+                {
+                    $category_name=$row['category_name']; 
+                    $category_id=$row['category_id'];?>
+                    <h4><li><?php echo $category_name;?></li></h4>
+                    <?php
+                }
+                ?>
+    </ul>
+</div> -->
+<div class="row">                
+        <center><h2 class="news"><strong >News Feed</strong></h2></center>
+        <?php echo get_posts(); ?>
+</div>
+
 </body>
 </html>
