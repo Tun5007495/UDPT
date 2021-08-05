@@ -53,24 +53,8 @@ include("functions/functions.php");
                     <li><a href='profile.php?<?php echo "u_id=$user_id" ?>'><?php echo "$first_name"; ?></a></li>
                     <!-- <li><a href="home.php">Home</a></li> -->
                     <li><a href="members.php">Find People</a></li>
-                    <!-- <li><a href="messages.php?u_id=new">Messages</a></li> -->
-                    
-						
-						<li class='dropdown'>
-							<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span><i class='glyphicon glyphicon-chevron-down'></i> See more...</span></a>
-							<ul class='dropdown-menu'>
-								<li>
-									<a href='my_post.php? <?php echo "u_id=$user_id" ?>'>My Posts <span class='badge badge-secondary'> <?php echo $posts ?> </span></a>
-								</li>
-								<li>
-									<a href='edit_profile.php?<?php echo "u_id=$user_id" ?>'>Edit Account</a>
-								</li>
-								<li role='separator' class='divider'></li>
-								<li>
-									<a href='logout.php'>Logout</a>
-								</li>
-							</ul>
-						</li>
+                    <li><a href="messages.php?u_id=new">Messages</a></li> 
+   
 						
 				<?php }
                 else 
@@ -127,6 +111,25 @@ include("functions/functions.php");
                                 ?>
                             </ul>
                         </li>
+                        <?php if($_SESSION['user_email']!="guest")
+                { ?>
+
+                        <li class='dropdown'>
+                            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span><i class='glyphicon glyphicon-chevron-down'></i> See more...</span></a>
+                            <ul class='dropdown-menu'>
+                                <li>
+                                    <a href='my_post.php? <?php echo "u_id=$user_id" ?>'>My Posts <span class='badge badge-secondary'> <?php echo $posts ?> </span></a>
+                                </li>
+                                <li>
+                                    <a href='edit_profile.php?<?php echo "u_id=$user_id" ?>'>Edit Account</a>
+                                </li>
+                                <li role='separator' class='divider'></li>
+                                <li>
+                                    <a href='logout.php'>Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php }?>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">

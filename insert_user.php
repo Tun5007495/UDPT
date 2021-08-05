@@ -39,7 +39,7 @@ include("includes/connection.php");
                 $profile_pic = "Ly Lan Dich 6.png";
             else if($rand == 3)
                 $profile_pic = "Ly Lan Dich 6.png";
-        $insert = "insert into users (f_name,l_name,user_name,describe_user,Relationship,user_pass,user_email,user_country,user_gender,user_birthday,user_image,user_cover,user_reg_date,status,posts,recovery_account)values('$first_name','$last_name','$username','Hello Coding Cafe. This is my default status!','...','$pass','$email','$country','$gender','$birthday','profile_pic','View.benyapa01.jpg',NOW(),'$status','$posts','Iwanttoputadingintheuniverse.')";
+        $insert = "insert into users (f_name,l_name,user_name,describe_user,Relationship,user_pass,user_email,user_country,user_gender,user_birthday,user_image,user_cover,user_reg_date,status,posts,recovery_account)values('$first_name','$last_name','$username','Hello everybody!','...','$pass','$email','$country','$gender','$birthday','image_profile.jpg','View.benyapa01.jpg',NOW(),'$status','$posts','Iwanttoputadingintheuniverse.')";
         $query = mysqli_query($con, $insert);
 
         if($query){
