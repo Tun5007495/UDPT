@@ -96,24 +96,39 @@
                 if($num==1)
                 { //chay oke
                     $delete_qr="delete from commentvote where com_id='$id' and user_vote_cmt='$user_vote_cmt'";
+                    $user_email="";
                     if(mysqli_query($con, $delete_qr))
                     {
                         $update_qr="update comments set CommentPoint=CommentPoint-1 where com_id='$id'";
                         $run=mysqli_query($con, $update_qr);
-                        //$result=mysqli_affected_rows($con);
+
+                        
+                        $user_email=$_SESSION['user_email'];
                     }
+
+                    $user_qr="update users set userpoint=userpoint-1 where user_email='$user_email' ";
+                    $run=mysqli_query($con, $user_qr);
+                    echo $user_email;
                 }
                 else
                 {
                     $insert_qr="insert into commentvote (com_id,post_id, user_vote_cmt) values('$id','$get_id','$user_vote_cmt')  ";
+                    $user_email="";
                    if(mysqli_query($con, $insert_qr))
                     {
                         $update_qr="update comments set CommentPoint=CommentPoint+1 where com_id='$id' ";
                         $run=mysqli_query($con, $update_qr);
+                       
+                        $user_email=$_SESSION['user_email'];
                     //$result=mysqli_affected_rows($con);
                     }
 
+                    $user_qr="update users set userpoint=userpoint+1 where user_email='$user_email' ";
+                    $run=mysqli_query($con, $user_qr);
+                    echo $user_email;
+
                 }
+
                 //echo "<script>alert('OK!')</script>";
             } 
             else

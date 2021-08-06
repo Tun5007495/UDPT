@@ -63,6 +63,8 @@ include("functions/functions.php");
                     <li><a href='signup.php'>SignUp</a></li>
                     <li><a href='signin.php'>SignIn</a></li>          
                <?php } ?> 
+                   
+                    <li><a href="ranking.php">Ranking</a></li>
                         <li class='dropdown'>
                             <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span>Categories</span></a>
                             <ul class='dropdown-menu'>
@@ -130,6 +132,12 @@ include("functions/functions.php");
                             </ul>
                         </li>
                     <?php }?>
+                            <?php if($_SESSION['user_email']=="tun@gmail.com")
+                            {
+
+                               //echo " <li><a href='admin_category.php'>Admin</a></li>";    
+                            }
+                            ?>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -299,10 +299,10 @@ if(!isset($_SESSION['user_email'])){
                     <div class='row'>
                         <div class='col-sm-12'>
                         </div>
-                        <div class='col-sm-6'>
+
                             <h3><p>$content</p></h3>
                             <h3>$postpoint 👍, $commentpoint &#9997</h3>
-                        </div>
+
 
                          <div class='col-sm-4'>
 

@@ -1200,6 +1200,163 @@ function results(){
 	}
 }
 
+function show_users()
+    {
+    	global $con;
+        $qr="select * from users order by userpoint desc limit 10";
+        $run=mysqli_query($con, $qr);
+        $num= mysqli_num_rows($run);
+        $temp=1;
+    echo"
+    <style>
+	table, th, td {
+		font-size:30px;
+	}
+	</style>
+    <div>
+    <table style='width:70%; color:orange;' align='center'>
+        <tr style='color:red'>
+        	<th>TOP</th>
+            <th>User name</th>
+            <th>First name</th>
+            
+            <th>Email</th>
+            <th>Point</th>
+
+        </tr>";
+        while($row_users=mysqli_fetch_array($run))
+            {
+            	echo "<tr style='color:black'>";
+
+                $user_id = $row_users['user_id'];
+                $user_name = $row_users['user_name'];
+                $f_name = $row_users['f_name'];
+                $email = $row_users['user_email'];
+                $point = $row_users['userpoint'];   
+               // $img=$row_users['user_image'];
+                echo"
+                <td>"; echo $temp; echo "</td>";     
+                echo"
+                <td>"; echo "<a style='color:black' href='user_profile.php?u_id="; echo $user_id; echo" '</a>";echo "$user_name </td>";
+                echo"
+                <td>"; echo $f_name; echo "</td>";
+                //echo "<td>"; echo $img; echo "</td>";
+
+                echo"
+                <td>"; echo $email; echo "</td>";
+                echo"
+                <td>"; echo $point; echo "</td>";
+				echo "</tr>";
+				$temp=$temp+1;
+            }
+        while($temp!=11)
+        {
+        	    echo "<tr style='color:black'>";
+  
+               // $img=$row_users['user_image'];
+                echo"
+                <td>"; echo $temp; echo "</td>";     
+                echo"
+                <td>"; echo "</td>";
+                echo"
+                <td>";  echo "</td>";
+                //echo "<td>"; echo $img; echo "</td>";
+
+                echo"
+                <td>"; echo "</td>";
+                echo"
+                <td>";  echo "</td>";
+				echo "</tr>";
+				$temp=$temp+1;
+        }
+            echo "
+        
+
+    </table>
+  </div>";
+}
+
+
+function show_posts()
+    {
+    	global $con;
+        $qr="select * from posts order by postpoint desc limit 10";
+        $run=mysqli_query($con, $qr);
+        $num= mysqli_num_rows($run);
+        $temp=1;
+    echo"
+    <style>
+	table, th, td {
+		border: 1px solid black;
+		font-size:30px;
+	}
+	</style>
+    <div>
+    <table style='width:70%; color:orange;' align='center' s>
+        <tr style='color:red'>
+        	<th>TOP</th>
+            <th>User Create</th>
+            <th>Content</th>
+            <th>Point</th>
+
+        </tr>";
+        while($row_posts=mysqli_fetch_array($run))
+            {
+            	echo "<tr style='color:black'>";
+            	$post_id = $row_posts['post_id']; 
+                $content = $row_posts['post_content'];
+                $user_id = $row_posts['user_id']; 
+                $point = $row_posts['PostPoint'];  
+
+
+                $user="select * from users where user_id='$user_id'";
+                $run_user=mysqli_query($con, $user);
+                $result_user=mysqli_fetch_array($run_user);
+
+                $user_name=$result_user['user_name'];
+                $f_name=$result_user['f_name']; 
+
+               // $img=$row_users['user_image'];
+                echo"
+                <td>"; echo $temp; echo "</td>";     
+                echo"
+                <td>"; echo "<a style='color:black' href='user_profile.php?u_id="; echo $user_id; echo" '</a>";echo "$user_name </td>";
+                //echo" <td>"; echo $f_name; echo "</td>";
+                //echo "<td>"; echo $img; echo "</td>";
+                //<td>"; echo $content; echo "</td>";
+                echo"
+                
+                <td>"; echo "<a style='color:black' href='single.php?post_id="; echo $post_id; echo" '</a>";echo  "$content</td>";
+                echo"
+                <td>"; echo $point; echo "</td>";
+				echo "</tr>";
+				$temp=$temp+1;
+            }
+                    while($temp!=11)
+        {
+        	    echo "<tr style='color:black'>";
+  
+               // $img=$row_users['user_image'];
+                echo"
+                <td>"; echo $temp; echo "</td>";     
+                echo"
+                <td>"; echo "</td>";
+                echo"
+                <td>";  echo "</td>";
+                //echo "<td>"; echo $img; echo "</td>";
+
+                echo"
+                <td>"; echo "</td>";
+                echo"
+                <td>";  echo "</td>";
+				echo "</tr>";
+				$temp=$temp+1;
+        }
+            echo "
+
+    </table>
+  </div><br><br>";
+}
 function search_user(){
 	global $con;
 
