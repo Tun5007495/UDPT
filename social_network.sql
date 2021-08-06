@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2021 at 10:52 AM
+-- Generation Time: Aug 06, 2021 at 01:26 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.7
 
@@ -66,7 +66,7 @@ CREATE TABLE `comments` (
 INSERT INTO `comments` (`com_id`, `post_id`, `user_id`, `comment`, `comment_author`, `date`, `CommentPoint`) VALUES
 (115, 25, 1, 'I want to see more pic details', 'duy_nguyen_879760', '2021-08-04 20:35:39', 1),
 (116, 25, 1, 'I think Vans. Vans Old Skool is cheap and makes us comfortable. You can see more at: https://vansvietnam.com.vn/vans-old-skool ', 'tuan anh _tran_401553', '2021-08-05 11:35:25', 0),
-(117, 26, 1, 'G&igrave; nữa đ&acirc;y??', 'tun_alo_585874', '2021-08-05 14:16:23', 1);
+(117, 26, 1, 'What???', 'tun_alo_585874', '2021-08-05 14:16:23', 1);
 
 -- --------------------------------------------------------
 
@@ -88,7 +88,7 @@ CREATE TABLE `commentvote` (
 
 INSERT INTO `commentvote` (`id`, `com_id`, `post_id`, `date`, `user_vote_cmt`) VALUES
 (15, 115, 25, '2021-08-04 20:36:08', 1),
-(16, 117, 26, '2021-08-05 14:16:32', 3);
+(21, 117, 26, '2021-08-06 11:16:46', 3);
 
 -- --------------------------------------------------------
 
@@ -113,7 +113,8 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`post_id`, `user_id`, `post_content`, `tag_id`, `category_id`, `upload_image`, `post_date`, `PostPoint`) VALUES
 (25, 1, 'Nike vs Vans, which is the best choice???', 1, 3, 'NikevsVans.png.100', '2021-08-04 20:22:54', 1),
-(26, 1, 'You can recommend famous english center??', 1, 2, '', '2021-08-04 20:41:16', 1);
+(26, 1, 'You can recommend famous english center??', 1, 2, '', '2021-08-04 20:41:16', 1),
+(30, 3, 'What should I do now???', 4, 4, '', '2021-08-06 11:24:32', 0);
 
 -- --------------------------------------------------------
 
@@ -194,7 +195,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `f_name`, `l_name`, `user_name`, `describe_user`, `Relationship`, `user_pass`, `user_email`, `user_country`, `user_gender`, `user_birthday`, `user_image`, `user_cover`, `user_reg_date`, `status`, `posts`, `recovery_account`, `userpoint`) VALUES
 (1, 'Duy', 'Nguyen', 'duy_nguyen_879760', 'Hello every body!', '...', '123456', 'nduyquang99@gmail.com', 'Vietnam', 'Male', '1999-09-08', 'BG.jpg.56', 'Lisa1.jpg.69', '2021-07-22 06:59:09', 'verified', 'yes', 'Iwanttoputadingintheuniverse.', 37),
 (2, 'Tuan Anh ', 'Tran', 'tuan anh _tran_401553', 'Hello everyone!', '...', '123456789', 'test@test.com', 'United States', 'Male', '2000-05-02', 'Ly Lan Dich 2.png.89', 'View.benyapa01.jpg', '2021-07-29 09:59:50', 'verified', 'yes', 'Iwanttoputadingintheuniverse.', 12),
-(3, 'Tũn', 'Đẹp Trai', 'tun_alo_585874', 'Hello everybody!', '...', '123456', 'tun@gmail.com', 'England', 'Male', '2021-08-13', 'image_profile.jpg', 'View.benyapa01.jpg', '2021-08-05 14:05:57', 'verified', 'no', 'Love', 233);
+(3, 'Tũn', 'Đẹp Trai', 'tun_alo_585874', 'Hello everybody!', '...', '123456', 'tun@gmail.com', 'England', 'Male', '2021-08-13', 'image_profile.jpg', 'View.benyapa01.jpg', '2021-08-05 14:05:57', 'verified', 'yes', 'Love', 233);
 
 -- --------------------------------------------------------
 
@@ -325,13 +326,13 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `commentvote`
 --
 ALTER TABLE `commentvote`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `report`
@@ -366,12 +367,6 @@ ALTER TABLE `vote`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `comments`
---
-ALTER TABLE `comments`
-  ADD CONSTRAINT `FK_comments_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `posts`
